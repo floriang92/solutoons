@@ -59,38 +59,42 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  Logo:{
+    width:"100px",
+    margin:"0 0 50px 0"
+  }
 }));
 
 function Login() {
   const classes = useStyles();
   const { authDispatch } = React.useContext(AuthContext);
-  const [user, setUser ] = React.useState({
-      username:'',
-      password:''
+  const [user, setUser] = React.useState({
+    username: '',
+    password: ''
   });
-  const [submit, setSubmit ] = React.useState(false);
+  const [submit, setSubmit] = React.useState(false);
 
-   React.useEffect( ()=>{
-        const loginUser = () => {
-            axios({
-                method:'post',
-                url:'',
-                data:user
-            })
-            .then((res) => {
-                authDispatch({type:'login',payload:res.data})
-                // console.log('test',res.data.accessToken)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        }
+  React.useEffect(() => {
+    const loginUser = () => {
+      axios({
+        method: 'post',
+        url: '',
+        data: user
+      })
+        .then((res) => {
+          authDispatch({ type: 'login', payload: res.data })
+          // console.log('test',res.data.accessToken)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
 
-        if(submit){
-            loginUser()
-            setSubmit(false)
-        }
-   }, [submit, user, authDispatch])
+    if (submit) {
+      loginUser()
+      setSubmit(false)
+    }
+  }, [submit, user, authDispatch])
 
   return (
     <div>
@@ -99,17 +103,15 @@ function Login() {
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
+            <img className={classes.Logo} src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} alt="" />
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <form className={classes.form}         
-            onSubmit={ e => {
-            e.preventDefault();
-            setSubmit(true);
-        }}>
+            <form className={classes.form}
+              onSubmit={e => {
+                e.preventDefault();
+                setSubmit(true);
+              }}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -120,7 +122,7 @@ function Login() {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                onChange={e => setUser({...user, username: e.target.value})}
+                onChange={e => setUser({ ...user, username: e.target.value })}
               />
               <TextField
                 variant="outlined"
@@ -132,7 +134,7 @@ function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => setUser({...user, password: e.target.value})}
+                onChange={e => setUser({ ...user, password: e.target.value })}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
