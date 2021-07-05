@@ -1,12 +1,20 @@
 import './App.css';
-import Login from "./Pages/Login"
+import CheckConnection from '../src/Components/CheckConnection/CheckConnection'
+import {
+  Switch,
+  Route,
+  BrowserRouter,
+} from "react-router-dom";
 
+import Dashboard from '../src/Pages/Dashboard'
 function App() {
   return (
     <div className="App">
-      <Login/>
+      <CheckConnection></CheckConnection>
     </div>
   );
 }
 
 export default App;
+
+
