@@ -30,16 +30,6 @@ export default function Dashboard() {
   }));
   const classes = useStyles();
 
-  const options = {
-    method: 'GET',
-    url: 'https://www.api.themoviedb.org/genre/16-animation/movie?api_key=e6d43483dd99ff97d0a9a9f9e44d2c0f7',
-  };
-  
-  axios.request(options).then(function (response) {
-    console.log(response.data);
-  }).catch(function (error) {
-    console.error(error);
-  });
   return (
     <div>
       <h2>Mes films</h2>
@@ -57,13 +47,13 @@ export default function Dashboard() {
     },
   ]}
 >
-<Link to="/ProfilPage" className={classes.queueLink}>
+<Link to="/ProfilPage">
 <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
 </Link>
-<Link to="/ProfilPage" className={classes.queueLink}>
+<Link to="/ProfilPage">
 <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
 </Link>
-<Link to="/ProfilPage" className={classes.queueLink}>
+<Link to="/ProfilPage">
 <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
 </Link>
 </Carousel>
@@ -84,23 +74,6 @@ export default function Dashboard() {
   <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
   <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
   <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
-</Carousel>
-<Carousel 
-      className={classes.carousel}
-  plugins={[
-    'infinite',
-    'arrows',
-    {
-      resolve: slidesToShowPlugin,
-      options: {
-       numberOfSlides: 6
-      }
-    },
-  ]}
->
-  <Link></Link><img onClick={console.log("test1")} src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
-  <img onClick={console.log("test2")} src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
-  <img onClick={console.log("test3")}src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
 </Carousel>
       </div>
      

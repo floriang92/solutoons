@@ -24,13 +24,13 @@ const getMuiTheme = () =>
       },
       MuiToolbar: {
         root: {
-          backgroundColor: "#73BA9B",
+          backgroundColor: "#023047",
           color: "white",
         },
       },
       MuiTableFooter: {
         root: {
-          backgroundColor: "#2e3f51",
+          backgroundColor: "#023047",
           color: "#73BA9B",
         },
       },

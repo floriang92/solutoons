@@ -135,8 +135,11 @@ export default function MiniDrawer() {
           </IconButton>
           <div className={classes.navbarContainer}>
             <div>
+            {/* <Link to="/ProfilPage">
+              <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
+            </Link> */}
               <Typography className={classes.titleApp} variant="h6" noWrap>
-                Solutoons
+                SOLUTOONS
               </Typography>
             </div>
             <div className={classes.sectionIcons}>
