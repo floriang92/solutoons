@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     outline: "none !important",
+    backgroundColor:"#023047"
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
@@ -72,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9) + 1,
     },
     outline: 0,
+    backgroundColor:"#023047"
   },
   toolbar: {
     display: "flex",
@@ -153,7 +155,7 @@ export default function MiniDrawer() {
     let content = (
       <MenuItem title={label} component={Link} to={"/" + path}>
         <ListItemIcon>{icon}</ListItemIcon>
-        <ListItemText primary={label} />
+        <ListItemText primary={label} style={{color:"#fff"}}/>
       </MenuItem>
     );
     return content;
@@ -180,14 +182,14 @@ export default function MiniDrawer() {
       >
         <div className={classes.toolbar}>
           <IconButton onClick={ChangeOpenValue}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon style={{color:"#fff"}} />
           </IconButton>
         </div>
         <Divider />
         <div className={classes.itemsLink}>
           <div className={classes.menuList}>
             <div className={classes.menuListTop}>
-              {sideBarItem("", <HouseOutlinedIcon />, "Voir une vidéo")}
+              {sideBarItem("", <HouseOutlinedIcon style={{color:"#fff"}}/>, "Voir une vidéo")}
               
             </div>
           </div>

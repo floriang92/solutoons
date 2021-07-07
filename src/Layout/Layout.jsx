@@ -39,6 +39,7 @@ const getMuiTheme = () =>
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    backgroundColor:"#FFB703"
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {

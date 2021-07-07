@@ -5,12 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "../src/Store/AuthContext";
 import { PreferenceProvider } from "../src/Store/PreferenceContext";
+import { ChildProvider } from "../src/Store/ChildContext"
 
 ReactDOM.render(
   <React.StrictMode>
     <PreferenceProvider>
       <AuthProvider>
+        <ChildProvider>
           <App />
+        </ChildProvider>
       </AuthProvider>
     </PreferenceProvider>
   </React.StrictMode>,
