@@ -14,6 +14,7 @@ function childReducer(state,action){
         case 'UpdateToken': {
             return{
                 ...state,
+                currentChild:{...state.currentChild, availableTokens: action.payload}
             }
         }
 

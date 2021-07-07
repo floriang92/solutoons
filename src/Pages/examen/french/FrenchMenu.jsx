@@ -1,10 +1,12 @@
 import React from 'react'
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 function FrenchMenu() {
+    const history = useHistory()
     return (
         <div>
-            <Button variant="contained" color="primary" href="/FormWordsOrder">Mettre les mots dans le bon ordre</Button>
+            <Button variant="contained" color="primary" onClick={() => history.replace("/FormWordsOrder")}>Mettre les mots dans le bon ordre</Button>
         </div>
     )
 }

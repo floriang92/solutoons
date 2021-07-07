@@ -12,6 +12,7 @@ import VideoDetail from "../Components/Youtube/VideoDetails";
 import VideoItem from "../Components/Youtube/VideoItem";
 import ModalLoader from "../Modal/Modalloader";
 import { ChildContext } from "../Store/ChildContext";
+import { AuthContext } from "../Store/AuthContext";
 
 export default function Dashboard() {
   const useStyles = makeStyles((theme) => ({
@@ -51,6 +52,7 @@ export default function Dashboard() {
     videos: [],
     selectedVideo: null
   })
+  const { authState, authDispatch } = React.useContext(AuthContext)
   const [searchedText, setSearchedText] = React.useState('')
   const [clicked, setClicked] = React.useState(false)
   const [renderedVideos, setRenderedVideos] = React.useState(null)
@@ -75,16 +77,30 @@ export default function Dashboard() {
 
   const handleVideoSelect = (video) => {
     setVideoState({ selectedVideo: video })
-    childDispatch({type:"UpdateToken" })
+    if (authState.availableTokens > 0) {
+      axios({
+        method: "PUT",
+        url: "http://localhost:5000/api/v1/users/updateToken/" + authState.id,
+        headers: { Authorization: "Bearer " + authState.token },
+        data: {amount: -1}
+      })
+        .then((res) => {
+          authDispatch({type:"updateToken", payload:res.data.newTokenAmount})
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    
     setClicked(true)
   }
   const classes = useStyles();
 
   return (
     <div >
-      <h2 style={{fontFamily:"cursive"}}>Il me reste {childState.currentChild.availableTokens} vidéos à regarder</h2>
+      <h2 style={{fontFamily:"cursive"}}>Il me reste {authState.availableTokens > 0 ? authState.availableTokens - 1 : 0} vidéos à regarder</h2>
       <div>
-      {clicked ? childState.currentChild.availableTokens ==! 0 ? <ModalLoader form={"load-video"} onlyModal={true} setClicked={setClicked} video={videoState.selectedVideo}/> : <ModalLoader form={"warning-tokens"} onlyModal={true} setClicked={setClicked}/> : null}
+      {clicked ? authState.availableTokens > 0 ? <ModalLoader form={"load-video"} onlyModal={true} setClicked={setClicked} video={videoState.selectedVideo}/> : <ModalLoader form={"warning-tokens"} onlyModal={true} setClicked={setClicked}/> : null}
         <SearchBar
           value={searchedText}
           onChange={(newValue) => setSearchedText(newValue)}

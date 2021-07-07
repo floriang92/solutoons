@@ -4,10 +4,11 @@ const AuthContext = React.createContext();
 const localState = JSON.parse(localStorage.getItem('authState'));
 
 const initialState ={
+    id:null,
     name:null,
     email:null,
-    accessToken:null,
-    picture:null,
+    token:null,
+    availableTokens:null,
 }
 
 function authReducer(state,action){
@@ -15,10 +16,17 @@ function authReducer(state,action){
         case'login':{
             return{
                 ...state,
-                name:action.payload.name,
-                email:action.payload.email,
-                accessToken:action.payload.accessToken,
-                picture: action.payload.picture,
+                id:action.payload.user._id,
+                firstname:action.payload.user.firstname,
+                email:action.payload.user.email,
+                token:action.payload.token,
+                availableTokens:action.payload.user.availableTokens
+            }
+        }
+        case'updateToken':{
+            return{
+                ...state,
+                availableTokens:action.payload
             }
         }
 

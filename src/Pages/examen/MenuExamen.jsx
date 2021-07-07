@@ -42,7 +42,7 @@ function MenuExamen() {
         {
           resolve: slidesToShowPlugin,
           options: {
-           numberOfSlides: 4
+           numberOfSlides: 3
           }
         },
       ]}

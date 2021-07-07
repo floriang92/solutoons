@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import Button from "@material-ui/core/Button";
-
-
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../../Store/AuthContext"
+import axios from "axios"
 function FormWordsOrder() {
 
 
@@ -9,7 +10,7 @@ function FormWordsOrder() {
         p1: "Je m'appelle Michel",
         p2: "Il y a une église dans le village",
         p3: "Je suis une personne de grande taille",
-        p4: "Paris est la belle ville du monde",
+        p4: "Paris est la plus belle ville du monde",
         p5: "Je pars à Tokyo dans deux mois",
         p6: "Je mange un couscous",
         p7: "La seine est un fleuve",
@@ -32,6 +33,10 @@ function FormWordsOrder() {
     const [reponses, setResponses] = useState({
         p1: "", p2: "", p3: "", p4: "", p5: "", p6: "", p7: "", p8: "", p9: "", p10: ""
     })
+    const [submit, setSubmit] = React.useState(false)
+    const { authState, authDispatch } = React.useContext(AuthContext)
+    const history = useHistory();
+    const [nbError, setNbError] = React.useState(0)
 
     function GetNewWordsOrder(string) {
         var stringToSplit = string
@@ -42,15 +47,15 @@ function FormWordsOrder() {
     }
     
     function checkValue(){
-        var nbError = 0;
+        var nbErrors = 0;
         var name = ""
         for(var i = 1; i <= 10; i++ ){
             name = "p"+i
             if(phrases[name] != reponses[name]){
-                nbError++;
+                nbErrors++;
             }
         }
-        return nbError;
+        return nbErrors;
     }
 
     const handleChange = evt => {
@@ -66,14 +71,37 @@ function FormWordsOrder() {
     const handleSubmit = e => {
         var nbError = checkValue()
         if(nbError > 3){
-            alert('Vous avez fait trop de faute pour regarder une vidéo. Votre score'+ (10-nbError)+'/10' )
+            alert('Vous avez fait trop de faute pour regarder une vidéo. Votre score '+ (10-nbError)+'/10' )
         }else {
-            alert('Bravo ! Tu as le droit de regarder une vidéo. Votre score'+ (10-nbError)+'/10' )
+            alert('Bravo ! Tu as le droit de regarder une vidéo. Votre score '+ (10-nbError)+'/10' )
         }
         e.preventDefault()
-        //insert add token
+        setSubmit(true)
     }
     
+    React.useEffect(() => {
+        const sendExam = () => {
+          axios({
+            method: "PUT",
+            url: "http://localhost:5000/api/v1/users/updateToken/" + authState.id,
+            headers: { Authorization: "Bearer " + authState.token },
+            data: {amount: 1}
+          })
+            .then((res) => {
+                authDispatch({type:"updateToken", payload:res.data.newTokenAmount})
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+    
+        if (submit === true && nbError < 3) {
+          sendExam();
+          setSubmit(false)
+          history.replace("/")
+        }
+      }, [submit, authState.token]);
+
     return (
         <form>
                 <span> {phrasesToModify.p1} </span><input type="text" name="p1" onChange={handleChange} /> <br/>
