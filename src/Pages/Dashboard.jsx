@@ -5,7 +5,13 @@ import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import axios from 'axios'
 import { Link } from "react-router-dom";
-
+import SearchBar from "material-ui-search-bar";
+import Youtube from "../Components/Youtube/youtube"
+import VideoList from "../Components/Youtube/VideoList";
+import VideoDetail from "../Components/Youtube/VideoDetails";
+import VideoItem from "../Components/Youtube/VideoItem";
+import ModalLoader from "../Modal/Modalloader";
+import { ChildContext } from "../Store/ChildContext";
 
 export default function Dashboard() {
   const useStyles = makeStyles((theme) => ({
@@ -16,6 +22,14 @@ export default function Dashboard() {
       marginTop: "5vh",
       flexWrap: "wrap",
     },
+    videoContainer: {
+      justifyContent: "space-evenly",
+      display: "flex",
+      flexDirection: "row",
+      marginTop: "5vh",
+      flexWrap: "wrap",
+      backgroundColor:"#FFB703"
+    },
     containerMapAndChart: {
       paddingRight: "15px",
     },
@@ -24,59 +38,64 @@ export default function Dashboard() {
       display: "flex",
       flexDirection: "row",
     },
-    carousel:{
-      width:"95vw"
+    carousel: {
+      width: "95vw"
+    },
+    searchbar: {
+      width:"60%",
+      margin:"auto",
+      borderRadius:"20px"
     }
   }));
+  const [videoState, setVideoState] = React.useState({
+    videos: [],
+    selectedVideo: null
+  })
+  const [searchedText, setSearchedText] = React.useState('')
+  const [clicked, setClicked] = React.useState(false)
+  const [renderedVideos, setRenderedVideos] = React.useState(null)
+  const { childState, childDispatch } = React.useContext(ChildContext)
+  const handleSubmit = async (termFromSearchBar) => {
+    const response = await Youtube.get('/search', {
+      params: {
+        q: termFromSearchBar
+      }
+    })
+    setVideoState({
+      videos: response.data.items
+    })
+    setRenderedVideos(response.data.items.map((video) => {
+      return <VideoItem key={video.id.videoId} video={video} handleVideoSelect={handleVideoSelect} /> })
+    )
+    console.log(response.data.items.map((video) => {
+      return <VideoItem key={video.id.videoId} video={video} handleVideoSelect={handleVideoSelect} /> }))
+
+    
+  };
+
+  const handleVideoSelect = (video) => {
+    setVideoState({ selectedVideo: video })
+    childDispatch({type:"UpdateToken" })
+    setClicked(true)
+  }
   const classes = useStyles();
 
   return (
-    <div>
-      <h2>Mes films</h2>
+    <div >
+      <h2 style={{fontFamily:"cursive"}}>Il me reste {childState.currentChild.availableTokens} vidéos à regarder</h2>
       <div>
-      <Carousel 
-      className={classes.carousel}
-  plugins={[
-    'infinite',
-    'arrows',
-    {
-      resolve: slidesToShowPlugin,
-      options: {
-       numberOfSlides: 6
-      }
-    },
-  ]}
->
-<Link to="/ProfilPage">
-<img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
-</Link>
-<Link to="/ProfilPage">
-<img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
-</Link>
-<Link to="/ProfilPage">
-<img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
-</Link>
-</Carousel>
-
-<Carousel 
-      className={classes.carousel}
-  plugins={[
-    'infinite',
-    'arrows',
-    {
-      resolve: slidesToShowPlugin,
-      options: {
-       numberOfSlides: 6
-      }
-    },
-  ]}
->
-  <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
-  <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
-  <img src={process.env.PUBLIC_URL + '/Images/logoSansFond.jpg'} />
-</Carousel>
+      {clicked ? childState.currentChild.availableTokens ==! 0 ? <ModalLoader form={"load-video"} onlyModal={true} setClicked={setClicked} video={videoState.selectedVideo}/> : <ModalLoader form={"warning-tokens"} onlyModal={true} setClicked={setClicked}/> : null}
+        <SearchBar
+          value={searchedText}
+          onChange={(newValue) => setSearchedText(newValue)}
+          onRequestSearch={() => handleSubmit(searchedText)}
+          className={classes.searchbar}
+        />
+        <div className={classes.videoContainer} >
+          {renderedVideos ? renderedVideos.map((video) => (video)) : <img src="/Images/PngLogo.png" style={{backgroundColor:"#eee", borderRadius:"100px"}} />}
+        </div>
       </div>
-     
+
     </div>
   );
 }
