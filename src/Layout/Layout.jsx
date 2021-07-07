@@ -8,6 +8,13 @@ import SideBarContent from './SideBarContent';
 import Dashboard from "../Pages/Dashboard";
 import LoadingPage from "../Pages/LoadingPage";
 import ProfilPage from "../Pages/ProfilPage";
+import MenuExamen from "../Pages/examen/MenuExamen";
+import FrenchMenu from "../Pages/examen/french/FrenchMenu";
+import MathMenu from "../Pages/examen/math/MathMenu";
+import GeographyMenu from "../Pages/examen/geography/GeographyMenu";
+import TablesMultiplication from "../Pages/examen/math/tables_multiplication";
+import FormWordsOrder from "../Pages/examen/french/FormWordsOrder";
+import FindCountryFlag from "../Pages/examen/geography/FindCountryFlag";
 
 const getMuiTheme = () =>
   createMuiTheme({
@@ -66,6 +73,13 @@ function Layout() {
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/LoadingPage" component={LoadingPage} />
             <Route exact path="/ProfilPage" component={ProfilPage} />
+            <Route exact path="/MenuExamen" component={MenuExamen} />
+            <Route exact path="/FrenchMenu" component={FrenchMenu} />
+            <Route exact path="/FormWordsOrder" component={FormWordsOrder} />
+            <Route exact path="/MathMenu" component={MathMenu} />
+            <Route exact path="/TablesMultiplication" component={TablesMultiplication} />
+            <Route exact path="/GeographyMenu" component={GeographyMenu} />
+            <Route exact path="/FindCountryFlag" component={FindCountryFlag} />
           </Switch>
         </main>
       </div>
