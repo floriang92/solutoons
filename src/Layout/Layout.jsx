@@ -20,6 +20,8 @@ const getMuiTheme = () =>
   createMuiTheme({
     overrides: {
       MUIDataTableBodyCell: {
+
+        
         root: {
           "&:nth-child(n)": {
             color: "black",
