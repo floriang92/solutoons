@@ -188,7 +188,7 @@ export default function MiniDrawer() {
           <div className={classes.menuList}>
             <div className={classes.menuListTop}>
               {sideBarItem("", <HouseOutlinedIcon />, "Voir une vidéo")}
-              
+              {sideBarItem("", <HouseOutlinedIcon />, "Faire un examen")}   
             </div>
           </div>
         </div>
