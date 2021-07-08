@@ -79,7 +79,7 @@ export default function Dashboard() {
   //Actualisation des crédits + affichage vidéo quand on clique dessus
   const handleVideoSelect = (video) => {
     setVideoState({ selectedVideo: video })
-    if (authState.availableTokens > 1) {
+    if (authState.availableTokens >= 0) {
       axios({
         method: "PUT",
         url: "http://localhost:5000/api/v1/users/updateToken/" + authState.id,
@@ -102,9 +102,9 @@ export default function Dashboard() {
 
   return (
     <div >
-      <h2 style={{fontFamily:"cursive"}}>Il me reste {authState.availableTokens > 0 ? authState.availableTokens - 1 : 0} vidéos à regarder</h2>
+      <h2 style={{fontFamily:"cursive"}}>Il me reste {authState.availableTokens > 1 ? authState.availableTokens : 0} vidéos à regarder</h2>
       <div>
-      {clicked ? authState.availableTokens > 1 ? <ModalLoader form={"load-video"} onlyModal={true} setClicked={setClicked} video={videoState.selectedVideo}/> : <ModalLoader form={"warning-tokens"} onlyModal={true} setClicked={setClicked}/> : null}
+      {clicked ? authState.availableTokens > 0 ? <ModalLoader form={"load-video"} onlyModal={true} setClicked={setClicked} video={videoState.selectedVideo}/> : <ModalLoader form={"warning-tokens"} onlyModal={true} setClicked={setClicked}/> : null}
         <SearchBar
           value={searchedText}
           onChange={(newValue) => setSearchedText(newValue)}

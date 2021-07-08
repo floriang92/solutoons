@@ -22,7 +22,7 @@ function authReducer(state,action){
                 firstname:action.payload.user.firstname,
                 email:action.payload.user.email,
                 token:action.payload.token,
-                availableTokens:action.payload.user.availableTokens
+                availableTokens:action.payload.user.availableTokens,
             }
         }
 
