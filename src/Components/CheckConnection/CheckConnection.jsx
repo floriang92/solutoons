@@ -9,12 +9,14 @@ import axios from "axios";
 function CheckConnection() {
   const { authState } = React.useContext(AuthContext);
   const [body, setBody] = React.useState();
-  const [checked, setChecked] = React.useState();
+  const [checked, setChecked] = React.useState(false);
 
+
+  /////////////////////////////////////////////////////////////////////// Vérification du token de connexion///////////////////////////////////////////////////////////////////////
   React.useEffect(() => {
     axios({
-      method: "get",
-      url: "",
+      method: "GET",
+      url: "/api/v1/users/profile",
       headers: { Authorization: "Bearer " + authState.token },
     })
       .then((res) => {
@@ -30,6 +32,8 @@ function CheckConnection() {
       });
   }, [authState.token]);
 
+
+  ///////////////////////////////////////////////////////////////////////Gestion de l'affichage///////////////////////////////////////////////////////////////////////
   React.useEffect(() => {
     if (checked) {
       setBody(<BrowserRouter><Layout/></BrowserRouter>);
@@ -37,7 +41,7 @@ function CheckConnection() {
     } else if (checked === false || authState.token === null) {
       setBody(<Login />);
     } else {
-      setBody(<BrowserRouter><Layout/></BrowserRouter>);
+      setBody(<LoadingPage/>);
 
     }
   }, [authState.token, checked]);

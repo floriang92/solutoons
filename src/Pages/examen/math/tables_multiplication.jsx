@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import Button from "@material-ui/core/Button";
-import { Redirect } from 'react-router';
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../../Store/AuthContext"
+import axios from "axios"
 
 function DisplayLine(props){
     return <span> {props.line} * {props.nb} = </span>
@@ -8,9 +10,12 @@ function DisplayLine(props){
 
 function TablesMultiplication() {
 
+  /////////////////////////////////////////////////////////////////////// Sujet de l'évaluation ///////////////////////////////////////////////////////////////////////
     const [nbRandom, setNbRandom] = useState({
         nb: Math.floor((Math.random()*11))
     })
+
+    /////////////////////////////////////////////////////////////////////// Analyse des résultats ///////////////////////////////////////////////////////////////////////
 
     const [state, setState] = useState({
         m1: 0,
@@ -47,16 +52,48 @@ function TablesMultiplication() {
         })
       }
 
+      /////////////////////////////////////////////////////////////////////// Affichage des résultats ///////////////////////////////////////////////////////////////////////
+
     const handleSubmit = e => {
         var nbError = checkValue()
         if(nbError > 3){
-            alert('Vous avez fait trop de faute pour regarder une vidéo. Votre score'+ (10-nbError)+'/10' )
+            alert('Vous avez fait trop de faute pour regarder une vidéo. Votre score '+ (10-nbError)+'/10' )
         }else {
-            alert('Bravo ! Tu as le droit de regarder une vidéo. Votre score'+ (10-nbError)+'/10' )
+            alert('Bravo ! Tu as le droit de regarder une vidéo. Votre score '+ (10-nbError)+'/10' )
         }
+        setNbError(nbError)
         e.preventDefault()
-        //insert add token
+        setSubmit(true)
     }
+    const [submit, setSubmit] = React.useState(false)
+    const { authState, authDispatch } = React.useContext(AuthContext)
+    const history = useHistory();
+    const [nbError, setNbError] = React.useState(0)
+
+    /////////////////////////////////////////////////////////////////////// Ajout de tokens si bonnes rponses ///////////////////////////////////////////////////////////////////////
+
+    React.useEffect(() => {
+        const sendExam = () => {
+          axios({
+            method: "PUT",
+            url: "/api/v1/users/updateToken/" + authState.id,
+            headers: { Authorization: "Bearer " + authState.token },
+            data: {amount: 1}
+          })
+            .then((res) => {
+                authDispatch({type:"updateToken", payload:res.data.newTokenAmount})
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+    
+        if (submit === true && nbError < 3) {
+          sendExam();
+          setSubmit(false)
+          history.replace("/")
+        }
+      }, [submit, authState.token]);
 
     return (
             <form>

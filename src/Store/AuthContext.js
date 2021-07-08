@@ -3,22 +3,34 @@ import React from 'react'
 const AuthContext = React.createContext();
 const localState = JSON.parse(localStorage.getItem('authState'));
 
+/////////////////////////////////////////////////////////////////////// Etat initial de la variable ///////////////////////////////////////////////////////////////////////
 const initialState ={
+    id:null,
     name:null,
     email:null,
-    accessToken:null,
-    picture:null,
+    token:null,
+    availableTokens:null,
 }
 
 function authReducer(state,action){
     switch(action.type){
+        /////////////////////////////////////////////////////////////////////// Mise à jour des infos lors du login ///////////////////////////////////////////////////////////////////////
         case'login':{
             return{
                 ...state,
-                name:action.payload.name,
-                email:action.payload.email,
-                accessToken:action.payload.accessToken,
-                picture: action.payload.picture,
+                id:action.payload.user._id,
+                firstname:action.payload.user.firstname,
+                email:action.payload.user.email,
+                token:action.payload.token,
+                availableTokens:action.payload.user.availableTokens,
+            }
+        }
+
+        /////////////////////////////////////////////////////////////////////// Mise à jour du nombre de tokens ///////////////////////////////////////////////////////////////////////
+        case'updateToken':{
+            return{
+                ...state,
+                availableTokens:action.payload
             }
         }
 

@@ -10,7 +10,6 @@ import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from 'axios';
@@ -19,8 +18,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="#">
+        Solutoons
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -29,6 +28,9 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+
+  /////////////////////////////////////////////////////////////////////// CSS ///////////////////////////////////////////////////////////////////////
+
   root: {
     height: "100vh",
   },
@@ -66,23 +68,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login() {
+
+  /////////////////////////////////////////////////////////////////////// Variables ///////////////////////////////////////////////////////////////////////
+
   const classes = useStyles();
   const { authDispatch } = React.useContext(AuthContext);
   const [user, setUser] = React.useState({
-    username: '',
+    email: '',
     password: ''
   });
   const [submit, setSubmit] = React.useState(false);
 
+  /////////////////////////////////////////////////////////////////////// Hooks ///////////////////////////////////////////////////////////////////////
+
   React.useEffect(() => {
     const loginUser = () => {
+      console.log(user)
       axios({
         method: 'post',
-        url: '',
+        url: '/api/v1/users/login',
         data: user
       })
         .then((res) => {
           authDispatch({ type: 'login', payload: res.data })
+          console.log(res.data)
           // console.log('test',res.data.accessToken)
         })
         .catch((err) => {
@@ -122,7 +131,7 @@ function Login() {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                onChange={e => setUser({ ...user, username: e.target.value })}
+                onChange={e => setUser({ ...user, email: e.target.value })}
               />
               <TextField
                 variant="outlined"

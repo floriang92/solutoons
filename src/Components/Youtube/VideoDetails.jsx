@@ -6,6 +6,7 @@ const VideoDetail = ({video}) => {
     }
 
     const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
+    /////////////////////////////////////////////////////////////////////// Affichage du lecteur vidéo ///////////////////////////////////////////////////////////////////////
     return (
         <div>
             <div style={{display:"flex"}}>

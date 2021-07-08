@@ -3,17 +3,21 @@ import React from 'react'
 const ChildContext = React.createContext();
 const localState = JSON.parse(localStorage.getItem('childState'));
 
+/////////////////////////////////////////////////////////////////////// Etat initial de la variable ///////////////////////////////////////////////////////////////////////
 const initialState ={
     currentChild:{
         availableTokens: 1,
     }
 }
 
+/////////////////////////////////////////////////////////////////////// Fonction pour modifier la variable ///////////////////////////////////////////////////////////////////////
+
 function childReducer(state,action){
     switch(action.type){
         case 'UpdateToken': {
             return{
                 ...state,
+                currentChild:{...state.currentChild, availableTokens: action.payload}
             }
         }
 

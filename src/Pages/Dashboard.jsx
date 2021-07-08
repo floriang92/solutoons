@@ -1,19 +1,17 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "../Components/Table/Table";
-import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import axios from 'axios'
-import { Link } from "react-router-dom";
 import SearchBar from "material-ui-search-bar";
 import Youtube from "../Components/Youtube/youtube"
-import VideoList from "../Components/Youtube/VideoList";
-import VideoDetail from "../Components/Youtube/VideoDetails";
 import VideoItem from "../Components/Youtube/VideoItem";
 import ModalLoader from "../Modal/Modalloader";
-import { ChildContext } from "../Store/ChildContext";
+import { AuthContext } from "../Store/AuthContext";
 
 export default function Dashboard() {
+
+  /////////////////////////////////////////////////////////////////////// CSS ///////////////////////////////////////////////////////////////////////
+
   const useStyles = makeStyles((theme) => ({
     container: {
       justifyContent: "space-evenly",
@@ -47,14 +45,19 @@ export default function Dashboard() {
       borderRadius:"20px"
     }
   }));
+
+  /////////////////////////////////////////////////////////////////////// Variables Setup ///////////////////////////////////////////////////////////////////////
   const [videoState, setVideoState] = React.useState({
     videos: [],
     selectedVideo: null
   })
+  const { authState, authDispatch } = React.useContext(AuthContext)
   const [searchedText, setSearchedText] = React.useState('')
   const [clicked, setClicked] = React.useState(false)
   const [renderedVideos, setRenderedVideos] = React.useState(null)
-  const { childState, childDispatch } = React.useContext(ChildContext)
+
+  /////////////////////////////////////////////////////////////////////// Fonction Setup ///////////////////////////////////////////////////////////////////////
+  // Recherches via searchbar
   const handleSubmit = async (termFromSearchBar) => {
     const response = await Youtube.get('/search', {
       params: {
@@ -73,18 +76,35 @@ export default function Dashboard() {
     
   };
 
+  //Actualisation des crédits + affichage vidéo quand on clique dessus
   const handleVideoSelect = (video) => {
     setVideoState({ selectedVideo: video })
-    childDispatch({type:"UpdateToken" })
+    if (authState.availableTokens >= 0) {
+      axios({
+        method: "PUT",
+        url: "/api/v1/users/updateToken/" + authState.id,
+        headers: { Authorization: "Bearer " + authState.token },
+        data: {amount: -1}
+      })
+        .then((res) => {
+          authDispatch({type:"updateToken", payload:res.data.newTokenAmount})
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    
     setClicked(true)
   }
   const classes = useStyles();
 
+  /////////////////////////////////////////////////////////////////////// Affichage du contenu du dashboard ///////////////////////////////////////////////////////////////////////
+
   return (
     <div >
-      <h2 style={{fontFamily:"cursive"}}>Il me reste {childState.currentChild.availableTokens} vidéos à regarder</h2>
+      <h2 style={{fontFamily:"cursive"}}>Il me reste {authState.availableTokens > 1 ? authState.availableTokens : 0} vidéos à regarder</h2>
       <div>
-      {clicked ? childState.currentChild.availableTokens ==! 0 ? <ModalLoader form={"load-video"} onlyModal={true} setClicked={setClicked} video={videoState.selectedVideo}/> : <ModalLoader form={"warning-tokens"} onlyModal={true} setClicked={setClicked}/> : null}
+      {clicked ? authState.availableTokens > 0 ? <ModalLoader form={"load-video"} onlyModal={true} setClicked={setClicked} video={videoState.selectedVideo}/> : <ModalLoader form={"warning-tokens"} onlyModal={true} setClicked={setClicked}/> : null}
         <SearchBar
           value={searchedText}
           onChange={(newValue) => setSearchedText(newValue)}
