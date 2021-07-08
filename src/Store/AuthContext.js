@@ -3,6 +3,7 @@ import React from 'react'
 const AuthContext = React.createContext();
 const localState = JSON.parse(localStorage.getItem('authState'));
 
+/////////////////////////////////////////////////////////////////////// Etat initial de la variable ///////////////////////////////////////////////////////////////////////
 const initialState ={
     id:null,
     name:null,
@@ -13,6 +14,7 @@ const initialState ={
 
 function authReducer(state,action){
     switch(action.type){
+        /////////////////////////////////////////////////////////////////////// Mise à jour des infos lors du login ///////////////////////////////////////////////////////////////////////
         case'login':{
             return{
                 ...state,
@@ -23,6 +25,8 @@ function authReducer(state,action){
                 availableTokens:action.payload.user.availableTokens
             }
         }
+
+        /////////////////////////////////////////////////////////////////////// Mise à jour du nombre de tokens ///////////////////////////////////////////////////////////////////////
         case'updateToken':{
             return{
                 ...state,

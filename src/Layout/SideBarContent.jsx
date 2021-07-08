@@ -9,17 +9,13 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
-import LocalAtmRoundedIcon from "@material-ui/icons/LocalAtmRounded";
 import { PreferenceContext } from "../Store/PreferenceContext";
-import CustomButton from "../Components/Button/CustomButton";
-import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
-import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import HouseOutlinedIcon from "@material-ui/icons/HouseOutlined";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import QueueIcon from "@material-ui/icons/Queue";
-import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
+import { MenuBookOutlined } from "@material-ui/icons";
 
 const drawerWidth = 240;
+
+/////////////////////////////////////////////////////////////////////// CSS ///////////////////////////////////////////////////////////////////////
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -165,6 +161,8 @@ export default function MiniDrawer() {
     setOpen(preferenceState.selectedPreference);
   }, [preferenceState.selectedPreference]);
 
+  /////////////////////////////////////////////////////////////////////// Rendu du menu Sidebar ///////////////////////////////////////////////////////////////////////
+
   return (
     <>
       <Drawer
@@ -190,7 +188,7 @@ export default function MiniDrawer() {
           <div className={classes.menuList}>
             <div className={classes.menuListTop}>
               {sideBarItem("", <HouseOutlinedIcon style={{color:"#fff"}}/>, "Voir une vidéo")}
-              {sideBarItem("MenuExamen", <HouseOutlinedIcon />, "Faire un examen")}   
+              {sideBarItem("MenuExamen", <MenuBookOutlined style={{color:"#fff"}}/>, "Faire un examen")}   
             </div>
           </div>
         </div>

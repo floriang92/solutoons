@@ -18,8 +18,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="#">
+        Solutoons
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -28,6 +28,9 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+
+  /////////////////////////////////////////////////////////////////////// CSS ///////////////////////////////////////////////////////////////////////
+
   root: {
     height: "100vh",
   },
@@ -65,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login() {
+
+  /////////////////////////////////////////////////////////////////////// Variables ///////////////////////////////////////////////////////////////////////
+
   const classes = useStyles();
   const { authDispatch } = React.useContext(AuthContext);
   const [user, setUser] = React.useState({
@@ -73,6 +79,8 @@ function Login() {
   });
   const [submit, setSubmit] = React.useState(false);
 
+  /////////////////////////////////////////////////////////////////////// Hooks ///////////////////////////////////////////////////////////////////////
+  
   React.useEffect(() => {
     const loginUser = () => {
       console.log(user)

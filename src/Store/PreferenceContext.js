@@ -3,6 +3,8 @@ import React from 'react'
 const PreferenceContext = React.createContext();
 const localState = JSON.parse(localStorage.getItem('preferenceState'));
 
+/////////////////////////////////////////////////////////////////////// Etat initial de la variable ///////////////////////////////////////////////////////////////////////
+
 const initialState ={
     selectedPreference:{
         open: false,
@@ -11,6 +13,9 @@ const initialState ={
 
 function preferenceReducer(state,action){
     switch(action.type){
+
+        /////////////////////////////////////////////////////////////////////// Ouvrir le menu ///////////////////////////////////////////////////////////////////////
+        
         case 'toggleDrawer': {
             return{
                 ...state,

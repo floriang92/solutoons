@@ -16,6 +16,8 @@ import TablesMultiplication from "../Pages/examen/math/tables_multiplication";
 import FormWordsOrder from "../Pages/examen/french/FormWordsOrder";
 import FindCountryFlag from "../Pages/examen/geography/FindCountryFlag";
 
+/////////////////////////////////////////////////////////////////////// CSS ///////////////////////////////////////////////////////////////////////
+
 const getMuiTheme = () =>
   createMuiTheme({
     overrides: {
@@ -60,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/////////////////////////////////////////////////////////////////////// Affichage Layout + gestion routes ///////////////////////////////////////////////////////////////////////
 
 function Layout() {
   const classes = useStyles();

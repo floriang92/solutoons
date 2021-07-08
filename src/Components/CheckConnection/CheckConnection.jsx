@@ -11,6 +11,8 @@ function CheckConnection() {
   const [body, setBody] = React.useState();
   const [checked, setChecked] = React.useState(false);
 
+
+  /////////////////////////////////////////////////////////////////////// Vérification du token de connexion///////////////////////////////////////////////////////////////////////
   React.useEffect(() => {
     axios({
       method: "GET",
@@ -30,6 +32,8 @@ function CheckConnection() {
       });
   }, [authState.token]);
 
+
+  ///////////////////////////////////////////////////////////////////////Gestion de l'affichage///////////////////////////////////////////////////////////////////////
   React.useEffect(() => {
     if (checked) {
       setBody(<BrowserRouter><Layout/></BrowserRouter>);

@@ -5,7 +5,7 @@ import { AuthContext } from "../../../Store/AuthContext"
 import axios from "axios"
 function FormWordsOrder() {
 
-
+/////////////////////////////////////////////////////////////////////// Sujet de l'évaluation ///////////////////////////////////////////////////////////////////////
     const [phrases, setPhrase] = useState({
         p1: "Je m'appelle Michel",
         p2: "Il y a une église dans le village",
@@ -18,6 +18,8 @@ function FormWordsOrder() {
         p9: "Je regarde la télévision",
         p10: "Je bois du thé"
     })
+
+/////////////////////////////////////////////////////////////////////// Analyse des réponses ///////////////////////////////////////////////////////////////////////
     const [phrasesToModify, setPhrasesToModify] = useState({
         p1: GetNewWordsOrder(phrases.p1),
         p2: GetNewWordsOrder(phrases.p2),
@@ -68,6 +70,8 @@ function FormWordsOrder() {
         })
       }
 
+/////////////////////////////////////////////////////////////////////// Affichage des résultats ///////////////////////////////////////////////////////////////////////
+
     const handleSubmit = e => {
         var nbError = checkValue()
         if(nbError > 3){
@@ -77,8 +81,10 @@ function FormWordsOrder() {
         }
         e.preventDefault()
         setSubmit(true)
+        setNbError(nbError)
     }
     
+    /////////////////////////////////////////////////////////////////////// Ajout de token si bonne note ///////////////////////////////////////////////////////////////////////
     React.useEffect(() => {
         const sendExam = () => {
           axios({

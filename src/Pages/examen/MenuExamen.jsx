@@ -1,13 +1,13 @@
 import React from 'react'
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "../../Components/Table/Table";
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import axios from 'axios'
 import { Link } from "react-router-dom";
 
   
-function MenuExamen() {
+function MenuExamen() { 
+  /////////////////////////////////////////////////////////////////////// CSS ///////////////////////////////////////////////////////////////////////
     const useStyles = makeStyles((theme) => ({
         container: {
           justifyContent: "space-evenly",
@@ -30,6 +30,7 @@ function MenuExamen() {
       }));
       const classes = useStyles();
     
+      /////////////////////////////////////////////////////////////////////// Affichage Menu ///////////////////////////////////////////////////////////////////////
       return (
         <div>
           <h2>Sélection de la matière</h2>

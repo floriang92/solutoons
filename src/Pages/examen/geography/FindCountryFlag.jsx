@@ -6,6 +6,8 @@ import { AuthContext } from "../../../Store/AuthContext"
 import { useHistory } from "react-router-dom";
 
 function FindCountryFlag() {
+
+  /////////////////////////////////////////////////////////////////////// Sujet de l'évaluation ///////////////////////////////////////////////////////////////////////
   const [listePays, setlistePays] = useState({
     p1: "Russie",
     p2: "France",
@@ -19,6 +21,7 @@ function FindCountryFlag() {
     p10: "États-Unis"
   })
 
+  /////////////////////////////////////////////////////////////////////// Analyse des réponses ///////////////////////////////////////////////////////////////////////
   const [reponses, setResponses] = useState({
     p1: "", p2: "", p3: "", p4: "", p5: "", p6: "", p7: "", p8: "", p9: "", p10: ""
   })
@@ -52,6 +55,8 @@ function FindCountryFlag() {
     })
   }
 
+  /////////////////////////////////////////////////////////////////////// Affichage des résultats ///////////////////////////////////////////////////////////////////////
+
   const handleSubmit = e => {
     var nbError = checkValue()
     if (nbError > 3) {
@@ -61,8 +66,10 @@ function FindCountryFlag() {
     }
     e.preventDefault()
     setSubmit(true)
+    setNbError(nbError)
   }
 
+  /////////////////////////////////////////////////////////////////////// Ajout de tokens si bonnes réponses ///////////////////////////////////////////////////////////////////////
   React.useEffect(() => {
     const sendExam = () => {
       axios({

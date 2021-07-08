@@ -10,9 +10,12 @@ function DisplayLine(props){
 
 function TablesMultiplication() {
 
+  /////////////////////////////////////////////////////////////////////// Sujet de l'évaluation ///////////////////////////////////////////////////////////////////////
     const [nbRandom, setNbRandom] = useState({
         nb: Math.floor((Math.random()*11))
     })
+
+    /////////////////////////////////////////////////////////////////////// Analyse des résultats ///////////////////////////////////////////////////////////////////////
 
     const [state, setState] = useState({
         m1: 0,
@@ -49,6 +52,8 @@ function TablesMultiplication() {
         })
       }
 
+      /////////////////////////////////////////////////////////////////////// Affichage des résultats ///////////////////////////////////////////////////////////////////////
+
     const handleSubmit = e => {
         var nbError = checkValue()
         if(nbError > 3){
@@ -56,6 +61,7 @@ function TablesMultiplication() {
         }else {
             alert('Bravo ! Tu as le droit de regarder une vidéo. Votre score '+ (10-nbError)+'/10' )
         }
+        setNbError(nbError)
         e.preventDefault()
         setSubmit(true)
     }
@@ -63,6 +69,8 @@ function TablesMultiplication() {
     const { authState, authDispatch } = React.useContext(AuthContext)
     const history = useHistory();
     const [nbError, setNbError] = React.useState(0)
+
+    /////////////////////////////////////////////////////////////////////// Ajout de tokens si bonnes rponses ///////////////////////////////////////////////////////////////////////
 
     React.useEffect(() => {
         const sendExam = () => {
