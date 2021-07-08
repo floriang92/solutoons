@@ -16,7 +16,7 @@ function CheckConnection() {
   React.useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:5000/api/v1/users/profile",
+      url: "/api/v1/users/profile",
       headers: { Authorization: "Bearer " + authState.token },
     })
       .then((res) => {

@@ -82,7 +82,7 @@ export default function Dashboard() {
     if (authState.availableTokens >= 0) {
       axios({
         method: "PUT",
-        url: "http://localhost:5000/api/v1/users/updateToken/" + authState.id,
+        url: "/api/v1/users/updateToken/" + authState.id,
         headers: { Authorization: "Bearer " + authState.token },
         data: {amount: -1}
       })

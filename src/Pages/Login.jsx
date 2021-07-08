@@ -80,13 +80,13 @@ function Login() {
   const [submit, setSubmit] = React.useState(false);
 
   /////////////////////////////////////////////////////////////////////// Hooks ///////////////////////////////////////////////////////////////////////
-  
+
   React.useEffect(() => {
     const loginUser = () => {
       console.log(user)
       axios({
         method: 'post',
-        url: 'http://localhost:5000/api/v1/users/login',
+        url: '/api/v1/users/login',
         data: user
       })
         .then((res) => {

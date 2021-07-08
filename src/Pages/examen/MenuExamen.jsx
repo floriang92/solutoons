@@ -2,7 +2,6 @@ import React from 'react'
 import { makeStyles } from "@material-ui/core/styles";
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
-import axios from 'axios'
 import { Link } from "react-router-dom";
 
   
